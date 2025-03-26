@@ -20,7 +20,7 @@ jobs:
                             "encrypted_user_id": "gAAAAABn2mbbXK_j224yxwaL7uqlw2tpbxELipeQD2iZCMl7lX0OQbcZAgPP4jIDedBTp81VwlkiCjijrfZDW3QN8MVuc8x92A==",
                             "scanner_id": 1,
                             "target_branch": "main",
-                            "repo_url": "https://github.com/DatlaBharath/Book-Project-Security",
+                            "repo_url": "https://github.com/DatlaBharath/HelloService",
                             "pat": "${{ secrets.PAT_TOKEN}}"
                           }')
           escaped_response=$(echo "$response" | sed 's/"/\\"/g')
@@ -28,6 +28,7 @@ jobs:
           curl -X POST http://ec2-13-201-18-57.ap-south-1.compute.amazonaws.com/app/save-curl-response-github \
                -H "Content-Type: application/json" \
                -d "{\"response\": \"$escaped_response\"}"
+          
           total_vulnerabilities=$(echo $response | jq -r '.total_vulnerabilites')
           if [[ $total_vulnerabilities -le 0 ]]; then
             echo "Success: No vulnerabilities found."
@@ -111,7 +112,7 @@ jobs:
                   ports:
                   - containerPort: 7073
           " > deployment.yaml
-
+         
           echo "
           apiVersion: v1
           kind: Service
@@ -126,6 +127,6 @@ jobs:
               targetPort: 7073
               nodePort: 30007
           " > service.yaml
-
+         
           ssh -o StrictHostKeyChecking=no -i /home/ubuntu/.ssh/test.pem ubuntu@13.203.9.97 "kubectl apply -f -" < deployment.yaml
           ssh -i /home/ubuntu/.ssh/test.pem -o StrictHostKeyChecking=no ubuntu@13.203.9.97 "kubectl apply -f -" < service.yaml
