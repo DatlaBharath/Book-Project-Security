@@ -25,7 +25,7 @@ pipeline {
                         --data '{
                             "encrypted_user_id": "gAAAAABnyCdKTdqwwv1tgbx8CqlTQnyYbqWBATox1Q58q-y8PmXbXc4_65tTO3jRijx92hpZI1juGV-80apcQa0Z72HgzkJsiA==",
                             "scanner_id": 1,
-                            "target_branch": "main", 
+                            "target_branch": "resolved", 
                             "repo_url": "https://github.com/DatlaBharath/HelloService",
                             "pat": "${PAT}"
                         }'
