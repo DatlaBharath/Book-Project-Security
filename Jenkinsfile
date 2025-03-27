@@ -5,6 +5,10 @@ pipeline {
         maven 'Maven'
     }
 
+    environment {
+        PAT = credentials('pat-key')
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -23,7 +27,7 @@ pipeline {
                             "scanner_id": 1,
                             "target_branch": "main", 
                             "repo_url": "https://github.com/DatlaBharath/HelloService",
-                            "pat": "string"
+                            "pat": "${PAT}"
                         }'
                     """, returnStdout: true).trim()
                     echo "Curl response: ${response}"
